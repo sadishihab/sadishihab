@@ -1,7 +1,7 @@
-# 👋 Hi, I’m Md. Shihabuddin Sadi  
+# Hi, I’m Md. Shihabuddin Sadi  
 **Software Engineer | DevOps & Cloud Native Engineer | Aspiring Platform Engineer**
 
-> 🚀 Passionate about building automated, scalable infrastructure and deploying cloud-native applications using modern DevOps tools.
+> Passionate about building automated, scalable infrastructure and deploying cloud-native applications using modern DevOps tools.
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-blue?logo=linkedin&style=flat-square)](https://www.linkedin.com/in/md-shihabuddin-sadi/)  
 [![GitHub followers](https://img.shields.io/github/followers/sadishihab?label=Follow&style=social)](https://github.com/sadishihab)  
@@ -9,7 +9,7 @@
 
 ---
 
-## 🧰 Tech Stack
+## Tech Stack
 
 **Cloud & Infra:** AWS, DigitalOcean, Terraform, Ansible  
 **Containers & Orchestration:** Docker, Kubernetes, EKS  
@@ -20,7 +20,7 @@
 
 ---
 
-## 📁 All Projects
+## All Projects
 
 | Project                                                                                            | Description                                                                        | Tech Highlights                  |
 | -------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | -------------------------------- |
@@ -50,16 +50,16 @@
 
 ---
 
-## 🧩 Goals
+## Goals
 - Build production-grade Kubernetes clusters end-to-end  
 - Design secure, automated CI/CD pipelines for microservices  
 - Contribute to open-source DevOps and cloud projects  
 
 ---
 
-## 🤝 Let’s Connect
-💬 Open to collaboration, remote work, and technical discussions.  
-📫 Reach me at [sadi.shihab@gmail.com](mailto:sadi.shihab@gmail.com)
+## Let’s Connect
+Open to collaboration, remote work, and technical discussions.  
+Reach me at [sadi.shihab@gmail.com](mailto:sadi.shihab@gmail.com)
 
 ---
 
@@ -67,4 +67,4 @@
 
 ---
 
-⭐ **Check out my repositories → [github.com/sadishihab?tab=repositories](https://github.com/sadishihab?tab=repositories)**  
+**Check out my repositories → [github.com/sadishihab?tab=repositories](https://github.com/sadishihab?tab=repositories)**  
