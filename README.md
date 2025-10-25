@@ -42,7 +42,7 @@
 
 ---
 
-## 🌱 What I’m Learning
+## What I’m Learning
 - Advanced **Kubernetes** and **Platform Engineering** concepts  
 - Cloud-native monitoring and **observability tools**  
 - Building **GitOps** workflows using ArgoCD and Flux  
