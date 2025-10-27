@@ -3,7 +3,9 @@
 
 > Passionate about building automated, scalable infrastructure and deploying cloud-native applications using modern DevOps tools.
 
-[Read my blog →](/blog/)
+## Blog
+
+Read my latest posts here: [sadishihab.github.io/blog](https://sadishihab.github.io/blog/)
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-blue?logo=linkedin&style=flat-square)](https://www.linkedin.com/in/md-shihabuddin-sadi/)  
 [![GitHub followers](https://img.shields.io/github/followers/sadishihab?label=Follow&style=social)](https://github.com/sadishihab)  
