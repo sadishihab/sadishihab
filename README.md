@@ -5,7 +5,12 @@
 
 ## Blog
 
-Read my latest posts here: [sadishihab.github.io/blog](https://sadishihab.github.io/blog/)
+[Read my latest posts here →](https://sadishihab.github.io/blog/)
+
+[Subscribe via RSS →](https://sadishihab.github.io/feed.xml)
+<a href="https://sadishihab.github.io/feed.xml">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/4/43/Feed-icon.svg" alt="RSS Feed" width="20" style="vertical-align: middle;">
+</a>
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-blue?logo=linkedin&style=flat-square)](https://www.linkedin.com/in/md-shihabuddin-sadi/)  
 [![GitHub followers](https://img.shields.io/github/followers/sadishihab?label=Follow&style=social)](https://github.com/sadishihab)  
