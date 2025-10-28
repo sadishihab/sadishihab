@@ -12,8 +12,12 @@
   <img src="https://upload.wikimedia.org/wikipedia/commons/4/43/Feed-icon.svg" alt="RSS Feed" width="20" style="vertical-align: middle;">
 </a>
 
+<br>
+
+[![GitHub followers](https://img.shields.io/github/followers/sadishihab?label=Follow&style=social)](https://github.com/sadishihab)
+
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-blue?logo=linkedin&style=flat-square)](https://www.linkedin.com/in/md-shihabuddin-sadi/)  
-[![GitHub followers](https://img.shields.io/github/followers/sadishihab?label=Follow&style=social)](https://github.com/sadishihab)  
+
 [![Gmail](https://img.shields.io/badge/Email-Me-red?logo=gmail&style=flat-square)](mailto:sadi.shihab@gmail.com)
 
 ---
