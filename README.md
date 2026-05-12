@@ -1,6 +1,6 @@
 # Hi, I'm Md. Shihabuddin Sadi 👋
 
-**AI / RAG Application Developer · DevOps & Cloud Native Engineer · Ex-Samsung R&D**
+**Software Engineer · AI / RAG Application Developer · DevOps & Cloud Native · Ex-Samsung R&D**
 
 > I build production RAG chatbots and AI agents that ship — multilingual support, grounded retrieval, no hallucinations. Backed by 15+ years of software engineering and the cloud infrastructure to keep it all running.
 
