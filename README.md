@@ -33,6 +33,23 @@ A production multilingual RAG chatbot deployed on **Facebook Messenger** for an 
 
 ---
 
+## 🔧 Open Source
+
+### [anna-developer-docs](https://github.com/Anna-Partners/anna-developer-docs) — *corrections merged (PR #3)*
+
+Lost a day to platform behaviour that contradicted the documentation. Traced each discrepancy through the runtime source rather than working around it, and wrote up seven findings with replacement text.
+
+All seven verified as accurate. **Six merged into the public developer docs** — including a capability string that no longer existed in the runtime, a required manifest field missing from the reference table, and a config schema documented with the wrong data type. The seventh turned out to be a **platform bug**: editing a resource through the web UI silently reset its visibility, causing publish failures that looked like user error. Confirmed and fixed in the following release.
+
+> *"One of the best community write-ups we've received — seven precise findings, each verified against actual runtime behavior. We verified all seven items and every single one was accurate."*
+> — platform engineering team
+
+### [anna-app-template](https://github.com/sadishihab/anna-app-template)
+
+A working starting point extracted from a shipped app, so the next builder doesn't repeat the discovery. JSON-RPC transport with a forward queue for concurrent reverse-RPC, persistent storage and model sampling with graceful degradation, three-platform binary CI, and a publish runbook covering the failure mode at each step. Clone, run the rename script, get a running plugin.
+
+---
+
 ## 🛠️ Tech Stack
 
 **AI / LLM / RAG:** OpenAI APIs (embeddings + chat completions), FAISS, FastAPI, Uvicorn, prompt engineering, cross-lingual prompting, similarity-threshold tuning, multilingual knowledge base curation, intent taxonomy design, Facebook Messenger Platform
@@ -52,6 +69,13 @@ A production multilingual RAG chatbot deployed on **Facebook Messenger** for an 
 | Project | Description | Tech Highlights |
 |---------|-------------|----------------|
 | [**Minimal RAG Chatbot**](https://github.com/sadishihab/minimal-rag-chatbot) | Multilingual (Bangla / Banglish / English → formal Bangla) RAG chatbot on Facebook Messenger; 224 Q&A entries across 14 intents, with similarity-threshold fallback and human takeover | Python · OpenAI · FAISS · FastAPI · Messenger Platform |
+
+### Developer Tooling
+
+| Project | Description | Tech Highlights |
+|---------|-------------|----------------|
+| [**error-journal**](https://github.com/sadishihab/error-journal) | Deterministic error fingerprinting — strips timestamps, pod suffixes and container IDs so the same failure is recognised across machines, then surfaces what fixed it last time. 109 curated diagnoses across 7 languages plus Kubernetes, Docker and shell | Python (stdlib) · PyInstaller · JSON-RPC · GitHub Actions |
+| [**anna-app-template**](https://github.com/sadishihab/anna-app-template) | Reusable scaffold with working transport, storage, sampling and three-platform binary CI. Clone, rename, running plugin | Python · PyInstaller · GitHub Actions |
 
 ### Cloud, DevOps & Platform Engineering
 
