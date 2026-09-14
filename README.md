@@ -4,6 +4,8 @@
 
 > I build production RAG chatbots and voice agents that ship — multilingual support, grounded retrieval, and validation layers that refuse to guess. Backed by 15+ years of software engineering and the cloud infrastructure to keep it all running.
 
+**Available for contract and subcontract work.** I work directly with product teams, and as the engineering layer behind agencies — white-label, under NDA, your client relationship stays yours.
+
 📅 [**Book a 30-min call →**](https://calendly.com/sadi-shihab/30min)  ·  🌐 [**Portfolio**](https://sadishihab.github.io/)  ·  💼 [**LinkedIn**](https://www.linkedin.com/in/md-shihabuddin-sadi/)
 
 <br>
@@ -25,7 +27,7 @@ A voice agent that takes insurance claims by phone and **cannot write a value in
 - **Three attempts to fix it in the recogniser, three null results.** Transcription mode, turn-detection patience and tool-schema format hints were each measured against the same four policy numbers. All null — the same letter is lost in every configuration, including one that produced a single perfectly patient turn. The failure is acoustic, and no setting reaches it. That negative result is the argument for the validation layer.
 - **Consent is bound to the question asked.** Agreeing that a value was heard correctly is not agreeing to replace a value already recorded. Two separate consents, enforced in code rather than requested in a prompt.
 - **Evidence trail** — every attempt is logged as it happens, rejections included, each linked to what the caller actually said and when. Crash-safe JSONL append, swept after 24 hours so caller PII does not accumulate.
-- **206 tests**, several pinning design decisions rather than behaviour, so a later change that quietly undoes one fails with an explanation of why it existed.
+- **206 tests**, including 62 on the validation layer alone — confusable policy pairs like `BX7-4402` vs `BX7-4420`, and all three verdicts. Several pin design decisions rather than behaviour, so a later change that quietly undoes one fails with an explanation of why it existed.
 - **Three documentation corrections published by AssemblyAI** from findings during the build; the keyterms result escalated to their research team.
 
 **Stack:** Python 3.14 · AssemblyAI Voice Agent API (Universal-3.5 Pro) · FastAPI · raw WebSocket relay · AudioWorklet (PCM16 @ 24 kHz) · Server-sent events · Docker · nginx · Let's Encrypt · DigitalOcean
@@ -81,7 +83,7 @@ A working starting point extracted from a shipped app, so the next builder doesn
 
 ---
 
-## 📂 All Projects
+## 📂 Selected Projects
 
 ### AI / RAG / Voice
 
@@ -101,26 +103,14 @@ A working starting point extracted from a shipped app, so the next builder doesn
 
 | Project | Description | Tech Highlights |
 |---------|-------------|----------------|
-| [**Single-Node-Kubernetes-Cluster**](https://github.com/sadishihab/Single-Node-Kubernetes-Cluster) | Multi-service web app deployed on a single-node Kubernetes cluster using Minikube | Kubernetes · Docker · Ingress |
-| [**eks**](https://github.com/sadishihab/eks) | Kubernetes on AWS (EKS) setup and deployment | AWS · EKS · Kubernetes |
 | [**aws-services**](https://github.com/sadishihab/aws-services) | Complete CI/CD pipeline in AWS | AWS · CI/CD · Terraform |
+| [**eks**](https://github.com/sadishihab/eks) | Kubernetes on AWS (EKS) setup and deployment | AWS · EKS · Kubernetes |
 | [**terraform**](https://github.com/sadishihab/terraform) | Infrastructure as Code with Terraform | Terraform · IaC · AWS |
-| [**prometheus**](https://github.com/sadishihab/prometheus) | Monitoring setup using Prometheus and Grafana | Prometheus · Grafana · Metrics |
-| [**ansible**](https://github.com/sadishihab/ansible) | Configuration management using Ansible | Ansible · Playbooks · Automation |
-| [**jenkins**](https://github.com/sadishihab/jenkins) | Build automation and CI/CD pipelines using Jenkins | Jenkins · Groovy · Automation |
-| [**kubernetes**](https://github.com/sadishihab/kubernetes) | Container orchestration demos and Kubernetes configs | Kubernetes · Pods · Services |
-| [**docker**](https://github.com/sadishihab/docker) | Docker projects and containerized applications | Docker · Compose · Images |
-| [**nexus**](https://github.com/sadishihab/nexus) | Running Nexus on droplet and publishing artifacts | Nexus · Artifact Mgmt · CI/CD |
-| [**java-app-deploy**](https://github.com/sadishihab/java-app-deploy) | Create a server and deploy an app on DigitalOcean | Java · DO · Deployment |
+| [**prometheus**](https://github.com/sadishihab/prometheus) | Monitoring and alerting with Prometheus and Grafana | Prometheus · Grafana · Metrics |
+| [**jenkins**](https://github.com/sadishihab/jenkins) | Build automation and CI/CD pipelines | Jenkins · Groovy · Automation |
+| [**Single-Node-Kubernetes-Cluster**](https://github.com/sadishihab/Single-Node-Kubernetes-Cluster) | Multi-service web app on a single-node cluster with ingress routing | Kubernetes · Docker · Ingress |
 
-### Programming & Automation
-
-| Project | Description | Tech Highlights |
-|---------|-------------|----------------|
-| [**automation-with-python**](https://github.com/sadishihab/automation-with-python) | Automating workflows and tasks using Python scripting | Python · Automation |
-| [**Leetcode**](https://github.com/sadishihab/Leetcode) | Python solutions to Leetcode problems | Python · DSA · Algorithms |
-| [**python**](https://github.com/sadishihab/python) | Learning and practicing Python programming | Python · Basics · Projects |
-| [**linux**](https://github.com/sadishihab/linux) | Basic Linux commands and shell utilities | Bash · Linux · SysOps |
+More infrastructure work — Ansible, Nexus, Docker, Kubernetes configs and deployment runbooks — in [the full repository list](https://github.com/sadishihab?tab=repositories).
 
 ---
 
@@ -136,23 +126,16 @@ A working starting point extracted from a shipped app, so the next builder doesn
 - Validation layers for voice agents, where speech recognition failures cannot be detected by the agent itself
 - Embedding strategy, vector search tuning, and cross-lingual prompt engineering
 - Multilingual NLP for low-resource and script-mixed languages (Bangla / Banglish)
-- Multi-agent AI workflows for research, ops, and customer support
 - Evaluation pipelines and observability for production AI systems
+- End-to-end Kubernetes and CI/CD for AI workloads
 
 ---
 
-## 🎯 Goals
+## 💬 Working Together
 
-- Ship reliable AI / RAG applications with strong evaluation, safety, and human-in-the-loop design
-- Build production-grade Kubernetes clusters end-to-end for AI workloads
-- Design secure, automated CI/CD pipelines for AI-powered microservices
-- Contribute to open-source AI, DevOps, and cloud projects
+I take on RAG, AI agent, and voice agent projects — both direct engagements and subcontract work behind agencies and product studios.
 
----
-
-## 💬 Let's Connect
-
-Open to **AI / RAG and voice agent project work**, contract engagements, and remote collaboration.
+**For agencies:** I work white-label and under NDA. You keep the client relationship and the brand; I build the RAG pipelines, agent backends, validation layers and the infrastructure underneath, or come in when something that worked in the demo stops working in production.
 
 📅 [Book a 30-min call](https://calendly.com/sadi-shihab/30min) · 📧 [sadi.shihab@gmail.com](mailto:sadi.shihab@gmail.com) · 💼 [LinkedIn](https://www.linkedin.com/in/md-shihabuddin-sadi/) · 🌐 [Portfolio](https://sadishihab.github.io/)
 
