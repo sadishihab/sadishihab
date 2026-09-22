@@ -53,6 +53,23 @@ A production multilingual RAG chatbot deployed on **Facebook Messenger** for an 
 
 ---
 
+### 🔍 [Error Journal](https://anna.partners/store/@sadi/error-journal) — *paste an error, get a real fix*
+
+A deterministic error-diagnosis app, live on the [Anna App Store](https://anna.partners/store/@sadi/error-journal). Paste any error — a Python traceback, a Kubernetes pod crash, a Docker build failure — and it gives you a real fix. Hit the exact same problem again later, even on a different machine, and it recognizes it and tells you what fixed it last time.
+
+**Why it's interesting:**
+- **Deterministic fingerprinting, not fuzzy matching.** Two logs of the same underlying error almost never look byte-identical — timestamps, pod names, and file paths all differ. The app strips everything volatile, classifies what remains, and hashes it, so the same problem is recognized as the same problem no matter how differently it's phrased each time.
+- **109 curated diagnoses**, hand-written and verified, across Python, JavaScript/Node, Go, Java, Rust, Ruby, PHP, plus Kubernetes, Docker, shell, and networking. Outside that list, it says *"not in my playbook"* honestly rather than inventing a fix — a wrong fix during an outage is worse than no fix.
+- **Returns runnable commands, not templates.** Real pod names, ports, and module names get substituted into fix steps, gated behind a strict allow-list so error text pasted by a user can never become a shell-injection vector in a command someone copies and runs.
+- **Python, stdlib only**, shipped as single-file binaries for Linux, macOS, and Windows via PyInstaller in a GitHub Actions matrix, with a smoke test on every platform before release.
+- **Testing surfaced real bugs**, including ANSI color codes silently breaking detection when copied from CI logs, and log-line prefixes like syslog and pytest tags causing correct errors to go unrecognized.
+
+**Stack:** Python (stdlib only) · PyInstaller · JSON-RPC · GitHub Actions
+
+🚀 [**Try it live**](https://anna.partners/store/@sadi/error-journal) · 📦 [**Source**](https://github.com/sadishihab/error-journal) · 🧱 [**Reusable template extracted from this build**](https://github.com/sadishihab/anna-app-template)
+
+---
+
 ### 🦾 [Bimanual VLA Table Setting](https://github.com/sadishihab/bimanual-vla) — *measurement over assumption*
 
 Two simulated SO-101 arms set a table in MuJoCo: a scripted expert picks four props out of a randomized layout, hands a prop from one arm to the other when no single arm can both reach it and reach its slot, records the successes as a LeRobot v3.0 dataset, trains an ACT policy on it, and converts the checkpoint to OpenVINO IR for Intel inference hardware.
@@ -70,20 +87,20 @@ The interesting part isn't the robotics. It's that every design decision traces 
 
 ---
 
-## 🔧 Open Source
+## 🔧 Open Source & Platform Contributions
 
 ### [anna-developer-docs](https://github.com/Anna-Partners/anna-developer-docs) — *corrections merged (PR #3)*
 
-Lost a day to platform behaviour that contradicted the documentation. Traced each discrepancy through the runtime source rather than working around it, and wrote up seven findings with replacement text.
+While building Error Journal on Anna's platform, I lost a day to platform behaviour that contradicted the documentation. Rather than work around it, I traced each discrepancy through the runtime source and wrote up seven findings with replacement text.
 
-All seven verified as accurate. **Six merged into the public developer docs** — including a capability string that no longer existed in the runtime, a required manifest field missing from the reference table, and a config schema documented with the wrong data type. The seventh turned out to be a **platform bug**: editing a resource through the web UI silently reset its visibility, causing publish failures that looked like user error. Confirmed and fixed in the following release.
+All seven verified as accurate. **Six merged into the public developer docs** — including a capability string that no longer existed in the runtime, a required manifest field missing from the reference table, and a config schema documented with the wrong data type. The seventh turned out to be a **production bug**: a storage-token issue that took the platform team a proper investigation to root cause, traced to a resource silently resetting its visibility when edited through the web UI. Confirmed and fixed in the following release.
 
 > *"One of the best community write-ups we've received — seven precise findings, each verified against actual runtime behavior. We verified all seven items and every single one was accurate."*
 > — platform engineering team
 
 ### [anna-app-template](https://github.com/sadishihab/anna-app-template)
 
-A working starting point extracted from a shipped app, so the next builder doesn't repeat the discovery. JSON-RPC transport with a forward queue for concurrent reverse-RPC, persistent storage and model sampling with graceful degradation, three-platform binary CI, and a publish runbook covering the failure mode at each step. Clone, run the rename script, get a running plugin.
+A working starting point extracted from Error Journal's build, so the next builder doesn't repeat the same discovery. JSON-RPC transport with a forward queue for concurrent reverse-RPC, persistent storage and model sampling with graceful degradation, three-platform binary CI, and a publish runbook covering the failure mode at each step. Clone, run the rename script, get a running plugin.
 
 ---
 
@@ -115,7 +132,7 @@ A working starting point extracted from a shipped app, so the next builder doesn
 
 | Project | Description | Tech Highlights |
 |---------|-------------|----------------|
-| [**error-journal**](https://github.com/sadishihab/error-journal) | Deterministic error fingerprinting — strips timestamps, pod suffixes and container IDs so the same failure is recognised across machines, then surfaces what fixed it last time. 109 curated diagnoses across 7 languages plus Kubernetes, Docker and shell | Python (stdlib) · PyInstaller · JSON-RPC · GitHub Actions |
+| [**error-journal**](https://anna.partners/store/@sadi/error-journal) | Deterministic error fingerprinting, live on the Anna App Store — strips timestamps, pod suffixes and container IDs so the same failure is recognised across machines, then surfaces what fixed it last time. 109 curated diagnoses across 7 languages plus Kubernetes, Docker and shell | Python (stdlib) · PyInstaller · JSON-RPC · GitHub Actions |
 | [**anna-app-template**](https://github.com/sadishihab/anna-app-template) | Reusable scaffold with working transport, storage, sampling and three-platform binary CI. Clone, rename, running plugin | Python · PyInstaller · GitHub Actions |
 
 ### Cloud, DevOps & Platform Engineering
