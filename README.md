@@ -2,7 +2,7 @@
 
 **Software Engineer · AI / RAG & Voice Agent Developer · DevOps & Cloud Native · Ex-Samsung R&D**
 
-> I build production RAG chatbots and voice agents that ship — multilingual support, grounded retrieval, and validation layers that refuse to guess. Backed by 15+ years of software engineering and the cloud infrastructure to keep it all running.
+> I build production RAG chatbots and voice agents that ship — multilingual support, grounded retrieval, and validation layers that refuse to guess. Backed by 17+ years of software engineering and the cloud infrastructure to keep it all running.
 
 **Available for contract and subcontract work.** I work directly with product teams, and as the engineering layer behind agencies — white-label, under NDA, your client relationship stays yours.
 
