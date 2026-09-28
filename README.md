@@ -36,6 +36,24 @@ A voice agent that takes insurance claims by phone and **cannot write a value in
 
 ---
 
+### 🔬 [Counterexample](https://github.com/sadishihab/counterexample) — *evidence over opinions, not tests that pass*
+
+A PR verification tool built on IBM Bob 2.0. AI writes pull requests faster than teams can review them, and green CI has become a weak signal: AI-written tests tend to confirm what AI-written code does, bugs included. Counterexample runs two independent checks on a pull request and merges them into one Review Receipt: diff-scoped mutation testing, and claim falsification, where Bob extracts the concrete claims the PR makes from its diff and linked issue, then spawns one subagent per claim, each writing and *running* an adversarial test to break it.
+
+**Why it's interesting:**
+- **100% mutation score on a PR that was still wrong.** On a real test PR (stacked coupons in a checkout service, with a planted logic bug), mutation testing scored a reproducible 100%. The bug computes a discount from the wrong variable, a class none of the four operator families (comparison flips, boolean swaps, arithmetic swaps, return-value tweaks) can express. Claim falsification caught it: 4 of 5 claims falsified, each with a failing test and real output. That gap is the argument for running both layers.
+- **Bob doing structural work.** A custom `Counterexample` mode with scoped tool access (Read, Edit, Execute, Skill, Subtask and Subagent on; Browser and mode-switching off), two custom skills (`extract-claims`, `falsify-claim`), and five parallel subagents in isolated contexts. The first full review cost 1.71 Bobcoins.
+- **It found something I hadn't planted.** Beyond the deliberately planted defects, it flagged a silent breaking change: callers still passing a single `Coupon` to the old signature now hit a `TypeError`. The existing tests never exercise that path, so CI could not see it.
+- **A race condition in my own tool.** The mutation runner joined a temp directory with an absolute path, and `Path("/tmp/x") / "/abs/path"` silently discards the left side, so concurrent mutant writes landed on the real repo file instead of an isolated copy. It surfaced as unexplained working-tree corruption, and was fixed at the source with a loud `ValueError` guard so it cannot recur silently.
+- **CI that says what it does not check.** A GitHub Action posts the mutation layer's result on every PR. A bug in that pipeline (pytest collecting unrelated files from GitHub's merge-commit checkout, so every mutant errored identically) was only visible once error details were added to the receipt, and the PR comment now states plainly that it covers mutation testing, not requirement-level verification.
+- **15 tests**, including end-to-end runs against a real demo repo and PR.
+
+**Stack:** Python 3.11 · IBM Bob 2.0 (custom modes, skills, subagents) · AST-based mutation testing · pytest · GitHub Actions
+
+🔍 [**See it on a real PR**](https://github.com/sadishihab/counterexample-demo-checkout/pull/1) · 📦 [**Demo repo with Bob's review evidence**](https://github.com/sadishihab/counterexample-demo-checkout)
+
+---
+
 ### 🤖 [Minimal RAG Chatbot](https://github.com/sadishihab/minimal-rag-chatbot)
 
 A production multilingual RAG chatbot deployed on **Facebook Messenger** for an interior design company in Dhaka. Customers send questions in **Bangla, Banglish, or English** — the bot always replies in **formal Bangla**, grounded in a curated knowledge base, with graceful human takeover when confidence is low.
@@ -108,6 +126,7 @@ A working starting point extracted from Error Journal's build, so the next build
 
 **AI / LLM / RAG:** OpenAI APIs (embeddings + chat completions), FAISS, FastAPI, Uvicorn, prompt engineering, cross-lingual prompting, similarity-threshold tuning, multilingual knowledge base curation, intent taxonomy design, Facebook Messenger Platform
 **Voice & Real-time:** AssemblyAI Voice Agent API, Universal-3.5 Pro, JSON-Schema tool calling, WebSocket relays, AudioWorklet / PCM16 capture, turn detection and barge-in, server-sent events
+**AI Agents & Verification:** IBM Bob 2.0 (custom modes, skills, subagents), multi-agent orchestration, AST-based mutation testing, adversarial test generation
 **Model Optimization & Robotics:** OpenVINO (IR conversion, INT8 quantization with NNCF, device benchmarking), LeRobot / ACT, MuJoCo, sentence-transformers
 **Cloud & Infra:** AWS, DigitalOcean, Terraform, Ansible
 **Containers & Orchestration:** Docker, Kubernetes, EKS
@@ -132,6 +151,7 @@ A working starting point extracted from Error Journal's build, so the next build
 
 | Project | Description | Tech Highlights |
 |---------|-------------|----------------|
+| [**Counterexample**](https://github.com/sadishihab/counterexample) | PR verification on IBM Bob 2.0: diff-scoped mutation testing plus claim falsification through parallel Bob subagents, merged into one Review Receipt. A GitHub Action posts the mutation layer's result on every pull request | Python · IBM Bob 2.0 · pytest · GitHub Actions |
 | [**error-journal**](https://anna.partners/store/@sadi/error-journal) | Deterministic error fingerprinting, live on the Anna App Store — strips timestamps, pod suffixes and container IDs so the same failure is recognised across machines, then surfaces what fixed it last time. 109 curated diagnoses across 7 languages plus Kubernetes, Docker and shell | Python (stdlib) · PyInstaller · JSON-RPC · GitHub Actions |
 | [**anna-app-template**](https://github.com/sadishihab/anna-app-template) | Reusable scaffold with working transport, storage, sampling and three-platform binary CI. Clone, rename, running plugin | Python · PyInstaller · GitHub Actions |
 
@@ -160,6 +180,7 @@ More infrastructure work — Ansible, Nexus, Docker, Kubernetes configs and depl
 
 - Production RAG pipeline design without heavy framework abstractions
 - Validation layers for voice agents, where speech recognition failures cannot be detected by the agent itself
+- Verifying AI-generated code with executed evidence: mutation testing and claim falsification instead of trusting green CI
 - Embedding strategy, vector search tuning, and cross-lingual prompt engineering
 - Multilingual NLP for low-resource and script-mixed languages (Bangla / Banglish)
 - Evaluation pipelines and observability for production AI systems
