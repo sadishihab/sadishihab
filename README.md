@@ -1,10 +1,10 @@
 # Hi, I'm Md. Shihabuddin Sadi 👋
 
-**Software Engineer · AI / RAG & Voice Agent Developer · DevOps & Cloud Native · Ex-Samsung R&D**
+**Software Engineer · AI Agents, MCP & RAG · Voice Agent Developer · DevOps & Cloud Native · Ex-Samsung R&D**
 
-> I build production RAG chatbots and voice agents that ship — multilingual support, grounded retrieval, and validation layers that refuse to guess. Backed by 17+ years of software engineering and the cloud infrastructure to keep it all running.
+> I build AI agents, MCP servers, RAG chatbots and voice agents that ship: grounded in real source documents, with validation layers that refuse to guess. Backed by 17+ years of software engineering and the cloud infrastructure to keep it all running.
 
-**Available for contract and subcontract work.** I work directly with product teams, and as the engineering layer behind agencies — white-label, under NDA, your client relationship stays yours.
+**Available for contract and subcontract work.** I work directly with product teams, and as the engineering layer behind agencies: white-label, under NDA, your client relationship stays yours.
 
 📅 [**Book a 30-min call →**](https://calendly.com/sadi-shihab/30min)  ·  🌐 [**Portfolio**](https://sadishihab.github.io/)  ·  💼 [**LinkedIn**](https://www.linkedin.com/in/md-shihabuddin-sadi/)
 
@@ -16,7 +16,29 @@
 
 ---
 
-## 🌟 Featured: AI / RAG / Voice Work
+## ⭐ Flagship: [FixIt](https://github.com/sadishihab/fixit-mcp), appliance repair answers from the real manual
+
+A self-hosted **MCP server for Alexa+** that diagnoses home appliance problems from the **real manufacturer manual for the appliance you own**, and cites the page. Ask about an error code or describe a symptom in plain words, and FixIt returns the manual's causes and repair steps. If the manual doesn't say, FixIt says that too, and never invents a repair step or a safety claim.
+
+Built for the Build, Ship, Shape: Amazon Developer Hackathon (Alexa+ track, plus the AWS Builder and Open Source mini challenges). The goal is a long-lived open-source project for manufacturers and contributors.
+
+🎬 [**Demo video**](https://youtu.be/EbuSbJQJrXQ) · 📦 [**Source (MIT)**](https://github.com/sadishihab/fixit-mcp) · 🏁 [**Devpost**](https://devpost.com/software/fixit-ai-home-appliance-repair-agent-for-alexa)
+
+**Why it's interesting:**
+- **No model inside any tool.** All AI work happens offline: manuals are parsed, repaired and extracted into structured records under a strict schema and an audit. The six live tools (diagnose an error code, diagnose a symptom, check the recorded warranty, list, add and remove appliances) are fast in-memory lookups. Two of them render MCP Apps visual cards.
+- **Absence of a field isn't a fact.** Real conversations caught the assistant calling an empty safety-warning list "safe". The rule is now pinned with tests: an empty field produces "the manual doesn't list one", an unknown code produces "not found", and the warranty tool reports only the recorded date, never coverage.
+- **Silent PDF corruption.** Two of the seven manuals extracted as plausible-looking garbage, each shifted by a constant character offset (a different offset per manual). The detection and repair, with guards against false positives, became a standalone library: [**pdf-encoding-repair**](https://github.com/sadishihab/pdf-encoding-repair).
+- **Measured, including the weak spots.** In one grounding-eval run, 62 of 63 cases were fully grounded (the case file has since grown to 72 and has not been re-run). The keyword symptom matcher was tuned from 25 to 43 of 47 paraphrases with 0 wrong first matches, but held-out recall stayed at 4 of 10, and that is reported rather than hidden. Warm calls take roughly 500–650 ms from Dhaka (about 320 ms of it network round trip). A brand-new session takes about 5 seconds.
+- **Production deployment on AWS.** The server runs on Amazon Bedrock AgentCore Runtime with IAM SigV4 auth. Household state lives in AgentCore Memory, because every Runtime session is its own microVM. A CloudWatch dashboard, error and latency alarms, and SNS alerts watch it.
+- **A friction log with 60+ real entries** for the Amazon teams: undocumented IAM fan-out in `CreateAgentRuntime`, a container guide that doesn't fit MCP servers, an undocumented Alexa+ session model, and the discovery that Claude on Bedrock is billed through AWS Marketplace, outside promotional credits.
+- **Honest about the client.** Alexa+ developer tools aren't open to outside builders yet, so the demo uses a clearly labelled *simulated* Alexa+ client, and the project claims no more than that.
+- **Built to be contributed to:** MIT license, CI, tagged releases, a no-AWS quickstart (`make try-it`), "good first issue" tickets, issue and PR templates, a security policy, an architecture guide, and a guide for manufacturers who want their manuals supported.
+
+**Stack:** Python 3.12 · uv · MCP Python SDK (spec 2025-11-25, Streamable HTTP, MCP Apps) · Amazon Bedrock AgentCore (Runtime, Memory) · Amazon Bedrock (Claude, Nova Pro) · Amazon Polly · CloudWatch · SNS · ECR · Docker · FastAPI · PyMuPDF · pydantic · GitHub Actions
+
+---
+
+## 🌟 More AI / RAG / Voice Work
 
 ### 🎙️ [Claim Intake Agent](https://github.com/sadishihab/claim-intake-agent) — *the agent that refuses to guess*
 
@@ -107,6 +129,14 @@ The interesting part isn't the robotics. It's that every design decision traces 
 
 ## 🔧 Open Source & Platform Contributions
 
+### [pdf-encoding-repair](https://github.com/sadishihab/pdf-encoding-repair) — *on [PyPI](https://pypi.org/project/pdf-encoding-repair/)*
+
+Some PDFs extract as text that looks like text but isn't: a broken font encoding shifts every character by a constant offset, and downstream search, RAG and extraction pipelines quietly ingest the garbage. This library detects that pattern, repairs it, and leaves clean PDFs untouched thanks to guards against false positives. It was extracted from FixIt's ingestion pipeline, where two of seven manufacturer manuals had the problem, each with a different offset. MIT licensed, with CI and a tagged release.
+
+### [fixit-mcp](https://github.com/sadishihab/fixit-mcp) — *open to contributors*
+
+FixIt is MIT licensed and set up for outside contributors: "good first issue" tickets, issue and PR templates, a security policy, an architecture guide, a guide for appliance manufacturers, and a quickstart that runs without an AWS account.
+
 ### [anna-developer-docs](https://github.com/Anna-Partners/anna-developer-docs) — *corrections merged (PR #3)*
 
 While building Error Journal on Anna's platform, I lost a day to platform behaviour that contradicted the documentation. Rather than work around it, I traced each discrepancy through the runtime source and wrote up seven findings with replacement text.
@@ -124,14 +154,17 @@ A working starting point extracted from Error Journal's build, so the next build
 
 ## 🛠️ Tech Stack
 
+**AI Agents & MCP:** Model Context Protocol (spec 2025-11-25, Streamable HTTP, MCP Apps), MCP Python SDK, tool design for voice assistants, grounding evaluation with LLM judges
+**AWS AI:** Amazon Bedrock AgentCore (Runtime, Memory), Amazon Bedrock (Claude, Amazon Nova), Amazon Polly
 **AI / LLM / RAG:** OpenAI APIs (embeddings + chat completions), FAISS, FastAPI, Uvicorn, prompt engineering, cross-lingual prompting, similarity-threshold tuning, multilingual knowledge base curation, intent taxonomy design, Facebook Messenger Platform
+**Document AI:** PyMuPDF, PDF text-encoding repair, schema-constrained extraction with pydantic, extraction audits
 **Voice & Real-time:** AssemblyAI Voice Agent API, Universal-3.5 Pro, JSON-Schema tool calling, WebSocket relays, AudioWorklet / PCM16 capture, turn detection and barge-in, server-sent events
-**AI Agents & Verification:** IBM Bob 2.0 (custom modes, skills, subagents), multi-agent orchestration, AST-based mutation testing, adversarial test generation
+**AI Agents & Verification:** IBM Bob 2.0 (custom modes, skills, subagents), Claude Code, multi-agent orchestration, AST-based mutation testing, adversarial test generation
 **Model Optimization & Robotics:** OpenVINO (IR conversion, INT8 quantization with NNCF, device benchmarking), LeRobot / ACT, MuJoCo, sentence-transformers
-**Cloud & Infra:** AWS, DigitalOcean, Terraform, Ansible
+**Cloud & Infra:** AWS (incl. ECR, CloudWatch, SNS, IAM), DigitalOcean, Terraform, Ansible
 **Containers & Orchestration:** Docker, Kubernetes, EKS
 **CI/CD:** Jenkins, GitHub Actions, GitLab CI/CD
-**Monitoring:** Prometheus, Grafana
+**Monitoring:** Prometheus, Grafana, Amazon CloudWatch
 **Languages:** Python, C, C++, Java, Bash, Groovy, JavaScript, SQL, YAML
 **Other:** Linux, Git, Networking, Automation, Embedded Systems
 
@@ -139,18 +172,20 @@ A working starting point extracted from Error Journal's build, so the next build
 
 ## 📂 Selected Projects
 
-### AI / RAG / Voice
+### AI Agents, MCP, RAG & Voice
 
 | Project | Description | Tech Highlights |
 |---------|-------------|----------------|
+| [**FixIt**](https://github.com/sadishihab/fixit-mcp) ⭐ | MCP server for Alexa+ that answers appliance error codes and symptoms from the real manufacturer manual, with the page cited. No model inside any tool; 7 manuals, 46 error-code records, 114 symptom rows | Python · MCP · Bedrock AgentCore · Bedrock · CloudWatch · Docker |
 | [**Claim Intake Agent**](https://github.com/sadishihab/claim-intake-agent) | Voice claim intake where a server-side validator returns one of three verdicts before anything reaches the record; readbacks are generated by the validator and spoken verbatim. Includes a live comparison of what a transcript-trusting system would have recorded | Python · AssemblyAI Voice Agent API · FastAPI · WebSockets · AudioWorklet · Docker · nginx |
 | [**Minimal RAG Chatbot**](https://github.com/sadishihab/minimal-rag-chatbot) | Multilingual (Bangla / Banglish / English → formal Bangla) RAG chatbot on Facebook Messenger; 224 Q&A entries across 14 intents, with similarity-threshold fallback and human takeover | Python · OpenAI · FAISS · FastAPI · Messenger Platform |
 | [**Bimanual VLA**](https://github.com/sadishihab/bimanual-vla) | Dual-arm table setting in MuJoCo — scripted expert, 134-episode LeRobot dataset, ACT policy, and OpenVINO INT8 conversion. Quantization divergence is reported by sign flip rather than by mean, because a mean hides the failure that matters | Python · MuJoCo · LeRobot / ACT · PyTorch · OpenVINO · NNCF |
 
-### Developer Tooling
+### Developer Tooling & Libraries
 
 | Project | Description | Tech Highlights |
 |---------|-------------|----------------|
+| [**pdf-encoding-repair**](https://github.com/sadishihab/pdf-encoding-repair) | Detects and repairs PDF text corrupted by a constant character offset from broken font encodings, with false-positive guards. Extracted from FixIt; published on PyPI | Python · PyMuPDF · PyPI · GitHub Actions |
 | [**Counterexample**](https://github.com/sadishihab/counterexample) | PR verification on IBM Bob 2.0: diff-scoped mutation testing plus claim falsification through parallel Bob subagents, merged into one Review Receipt. A GitHub Action posts the mutation layer's result on every pull request | Python · IBM Bob 2.0 · pytest · GitHub Actions |
 | [**error-journal**](https://anna.partners/store/@sadi/error-journal) | Deterministic error fingerprinting, live on the Anna App Store — strips timestamps, pod suffixes and container IDs so the same failure is recognised across machines, then surfaces what fixed it last time. 109 curated diagnoses across 7 languages plus Kubernetes, Docker and shell | Python (stdlib) · PyInstaller · JSON-RPC · GitHub Actions |
 | [**anna-app-template**](https://github.com/sadishihab/anna-app-template) | Reusable scaffold with working transport, storage, sampling and three-platform binary CI. Clone, rename, running plugin | Python · PyInstaller · GitHub Actions |
@@ -178,6 +213,8 @@ More infrastructure work — Ansible, Nexus, Docker, Kubernetes configs and depl
 
 ## 🌱 What I'm Working On
 
+- **FixIt:** growing manual coverage, an easier ingestion path for new manuals, and the account-linking path that would let real Alexa+ call the server
+- MCP servers for voice assistants that answer from source documents, with no model in the live request path
 - Production RAG pipeline design without heavy framework abstractions
 - Validation layers for voice agents, where speech recognition failures cannot be detected by the agent itself
 - Verifying AI-generated code with executed evidence: mutation testing and claim falsification instead of trusting green CI
@@ -191,9 +228,9 @@ More infrastructure work — Ansible, Nexus, Docker, Kubernetes configs and depl
 
 ## 💬 Working Together
 
-I take on RAG, AI agent, and voice agent projects — both direct engagements and subcontract work behind agencies and product studios.
+I take on AI agent, MCP, RAG and voice agent projects — both direct engagements and subcontract work behind agencies and product studios.
 
-**For agencies:** I work white-label and under NDA. You keep the client relationship and the brand; I build the RAG pipelines, agent backends, validation layers and the infrastructure underneath, or come in when something that worked in the demo stops working in production.
+**For agencies:** I work white-label and under NDA. You keep the client relationship and the brand; I build the RAG pipelines, agent backends, MCP servers, validation layers and the infrastructure underneath, or come in when something that worked in the demo stops working in production.
 
 📅 [Book a 30-min call](https://calendly.com/sadi-shihab/30min) · 📧 [sadi.shihab@gmail.com](mailto:sadi.shihab@gmail.com) · 💼 [LinkedIn](https://www.linkedin.com/in/md-shihabuddin-sadi/) · 🌐 [Portfolio](https://sadishihab.github.io/)
 
