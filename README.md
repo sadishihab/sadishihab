@@ -40,6 +40,25 @@ Built for the Build, Ship, Shape: Amazon Developer Hackathon (Alexa+ track, plus
 
 ## 🌟 More AI / RAG / Voice Work
 
+### 🎤 [Roadie](https://github.com/sadishihab/roadie-tour-planner) — *a tour planner that says what the data can't tell you*
+
+An AI tour planner for touring stand-up comedians, built for the Qloo Agentic Hackathon. Give it a comedian's name and it returns a plan grounded in Qloo's audience data: cities grouped by audience-affinity tier, a west-to-east route through the strongest ones, the comedy venues each city's audience favors, comics to bill with, brands with audience overlap, and a copyable booking pitch for every city. Every line is labelled as a Qloo result or as Roadie's own reading of it. The hosted demo has five pre-built plans and a live search that builds a plan for any comedian you pick, step by step.
+
+**Why it's interesting:**
+- **The data didn't support the obvious design.** City affinity scores clustered so tightly that many candidate cities sat within a few hundredths of the top one, so a 1-to-12 ranking would have been noise presented as insight. Roadie groups cities into tiers and says plainly that cities in a tier can't be ordered. Shared-audience scores came in repeated tiers and trend data was flat for comedians, so both sections were cut rather than shown with weak numbers.
+- **A language model that only words the plan.** The model never supplies facts. A verifier rejects any reply that names a city, venue, comic or brand outside the plan, characterizes the audience, or claims a cause or sponsorship intent, and the result falls back to template text. The check errs toward rejecting: a rejected reply costs some prose, never accuracy.
+- **Search that never picks for you.** A comedian's name also matches film stars with higher popularity scores, so the live search lists the candidates and makes the visitor choose. Qloo's similar-people lists are not all comedians either, so each person is marked identified or not from a one-line description, and a plan with no identified comics says so instead of inventing a billing partner.
+- **Sensitive traits stay out.** Qloo's person records carry Wikipedia-style tags that can name sexual orientation, religion or ethnicity. Roadie never keeps them, and tests fail if any appear.
+- **Qloo data stays out of the public repo.** The organizers don't allow Qloo responses in a public repository, so the repo holds code and synthetic data only, the real plans are served from private storage on the host, and guard tests scan every tracked file for real entity IDs.
+- **A 47-second call, fixed by keeping one process alive.** On a free host with a tenth of a CPU, every call to the Qloo CLI started a fresh Node process, and start-up alone took about 47 seconds, so live plans hit their call cap and failed. Running the harness as one long-running `qloo mcp` process (JSON-RPC over stdio) brought a full live plan to about 15 seconds on the same host. A cold start after the free instance sleeps is not yet measured.
+- **428 tests**, none touching the network or Qloo, including a scripted fake of the harness process.
+
+**Stack:** Python · FastAPI · Qloo Insights API and official harness (`qloo mcp`, JSON-RPC over stdio) · OpenAI (GPT-6 Luna) · Docker · Render · Claude Code
+
+🌐 [**Live demo**](https://roadie-tour-planner.onrender.com) · 📦 [**Source (MIT)**](https://github.com/sadishihab/roadie-tour-planner) · 🏁 [**Devpost**](https://devpost.com/software/roadie-ai-tour-planner-for-stand-up-comedians)
+
+---
+
 ### 🎙️ [Claim Intake Agent](https://github.com/sadishihab/claim-intake-agent) — *the agent that refuses to guess*
 
 A voice agent that takes insurance claims by phone and **cannot write a value into the record unless server-side code approves it**. The agent listens and proposes. A validator decides, returning one of three verdicts — accepted, unconfirmed, rejected — along with the exact sentence the agent must then speak, phonetically spelled. It never invents a readback.
@@ -154,14 +173,14 @@ A working starting point extracted from Error Journal's build, so the next build
 
 ## 🛠️ Tech Stack
 
-**AI Agents & MCP:** Model Context Protocol (spec 2025-11-25, Streamable HTTP, MCP Apps), MCP Python SDK, tool design for voice assistants, grounding evaluation with LLM judges
+**AI Agents & MCP:** Model Context Protocol (spec 2025-11-25, Streamable HTTP, MCP Apps), MCP Python SDK, Qloo Insights API and harness (`qloo mcp`, JSON-RPC over stdio), tool design for voice assistants, grounding evaluation with LLM judges
 **AWS AI:** Amazon Bedrock AgentCore (Runtime, Memory), Amazon Bedrock (Claude, Amazon Nova), Amazon Polly
-**AI / LLM / RAG:** OpenAI APIs (embeddings + chat completions), FAISS, FastAPI, Uvicorn, prompt engineering, cross-lingual prompting, similarity-threshold tuning, multilingual knowledge base curation, intent taxonomy design, Facebook Messenger Platform
+**AI / LLM / RAG:** OpenAI APIs (embeddings + chat completions), FAISS, FastAPI, Uvicorn, prompt engineering, cross-lingual prompting, similarity-threshold tuning, multilingual knowledge base curation, intent taxonomy design, Facebook Messenger Platform, verifying model output against structured source data
 **Document AI:** PyMuPDF, PDF text-encoding repair, schema-constrained extraction with pydantic, extraction audits
 **Voice & Real-time:** AssemblyAI Voice Agent API, Universal-3.5 Pro, JSON-Schema tool calling, WebSocket relays, AudioWorklet / PCM16 capture, turn detection and barge-in, server-sent events
 **AI Agents & Verification:** IBM Bob 2.0 (custom modes, skills, subagents), Claude Code, multi-agent orchestration, AST-based mutation testing, adversarial test generation
 **Model Optimization & Robotics:** OpenVINO (IR conversion, INT8 quantization with NNCF, device benchmarking), LeRobot / ACT, MuJoCo, sentence-transformers
-**Cloud & Infra:** AWS (incl. ECR, CloudWatch, SNS, IAM), DigitalOcean, Terraform, Ansible
+**Cloud & Infra:** AWS (incl. ECR, CloudWatch, SNS, IAM), DigitalOcean, Render, Terraform, Ansible
 **Containers & Orchestration:** Docker, Kubernetes, EKS
 **CI/CD:** Jenkins, GitHub Actions, GitLab CI/CD
 **Monitoring:** Prometheus, Grafana, Amazon CloudWatch
@@ -177,6 +196,7 @@ A working starting point extracted from Error Journal's build, so the next build
 | Project | Description | Tech Highlights |
 |---------|-------------|----------------|
 | [**FixIt**](https://github.com/sadishihab/fixit-mcp) ⭐ | MCP server for Alexa+ that answers appliance error codes and symptoms from the real manufacturer manual, with the page cited. No model inside any tool; 7 manuals, 46 error-code records, 114 symptom rows | Python · MCP · Bedrock AgentCore · Bedrock · CloudWatch · Docker |
+| [**Roadie**](https://github.com/sadishihab/roadie-tour-planner) | AI tour planner for stand-up comedians on Qloo audience data: cities in affinity tiers, a west-to-east route, venues, comics to bill with and a booking pitch per city. Model text is verified against the plan, and live search runs on one persistent harness process | Python · FastAPI · Qloo Insights API · OpenAI · Docker · Render |
 | [**Claim Intake Agent**](https://github.com/sadishihab/claim-intake-agent) | Voice claim intake where a server-side validator returns one of three verdicts before anything reaches the record; readbacks are generated by the validator and spoken verbatim. Includes a live comparison of what a transcript-trusting system would have recorded | Python · AssemblyAI Voice Agent API · FastAPI · WebSockets · AudioWorklet · Docker · nginx |
 | [**Minimal RAG Chatbot**](https://github.com/sadishihab/minimal-rag-chatbot) | Multilingual (Bangla / Banglish / English → formal Bangla) RAG chatbot on Facebook Messenger; 224 Q&A entries across 14 intents, with similarity-threshold fallback and human takeover | Python · OpenAI · FAISS · FastAPI · Messenger Platform |
 | [**Bimanual VLA**](https://github.com/sadishihab/bimanual-vla) | Dual-arm table setting in MuJoCo — scripted expert, 134-episode LeRobot dataset, ACT policy, and OpenVINO INT8 conversion. Quantization divergence is reported by sign flip rather than by mean, because a mean hides the failure that matters | Python · MuJoCo · LeRobot / ACT · PyTorch · OpenVINO · NNCF |
@@ -215,6 +235,7 @@ More infrastructure work — Ansible, Nexus, Docker, Kubernetes configs and depl
 
 - **FixIt:** growing manual coverage, an easier ingestion path for new manuals, and the account-linking path that would let real Alexa+ call the server
 - MCP servers for voice assistants that answer from source documents, with no model in the live request path
+- Agents grounded in external data APIs (Qloo for Roadie), where the plan labels what the data says and what it cannot tell you
 - Production RAG pipeline design without heavy framework abstractions
 - Validation layers for voice agents, where speech recognition failures cannot be detected by the agent itself
 - Verifying AI-generated code with executed evidence: mutation testing and claim falsification instead of trusting green CI
